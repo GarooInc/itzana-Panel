@@ -7,11 +7,12 @@ function App() {
   const [orders, setOrders] = useState({})
   const [show , setShow] = useState(false)
   const [selectedOrder, setSelectedOrder] = useState(null)
+  const api = import.meta.env.VITE_API_URL
 
 
   const fetchOrders = async () => {
     try {
-      const response = await fetch('https://garoo-hotel-orders.koyeb.app/kaana/api/v1/orders ',{
+      const response = await fetch(`${api}/api/v1/orders`, {
         method : 'GET'
       })  
 
@@ -40,29 +41,30 @@ function App() {
   ]
 
   return (
-    <div className="App h-screen w-screen overflow-y-auto bg-white p-10">
+    <div className="App h-screen w-screen overflow-y-auto bg-green p-10">
+      <h1 className="text-3xl text-center font-bold py-10 italic text-light-brown">Itzana Orders</h1>
       <div className='flex'>
         {
           header.map((item, index) => (
-            <h1 key={index} className="text-gray-500 text-center w-1/5">{item}</h1>
+            <h1 key={index} className="header_item">{item}</h1>
           ))
         }
       </div>
-      <div className="w-full rounded-xl border-2 border-gray-200 shadow-md my-4">
+      <div className="w-full my-4">
         {
           orders && orders.orders && orders.orders.map((order, index) => (
             <div key={index} className="flex flex-col p-4 border-b border-gray-200 rounded-md shadow-md my-4">
               <div className="flex w-full rounded-xl">
-                <div className="text-gray-500 w-1/5 text-center">{order.family}</div>
-                <div className="text-gray-500 w-1/5 text-center">{order.room}</div>
-                <div className="text-gray-500 w-1/5 text-center">{order.contact}</div>
-                <div key={index} className="flex justify-between flex-col w-1/5 text-center">
+                <div className="text_item">{order.family}</div>
+                <div className="text_item">{order.room}</div>
+                <div className="text_item">{order.contact}</div>
+                <div key={index} className="flex justify-between flex-col w-1/5 text-center relative">
                 {
                   order.items && 
                       order.items.length > 0 && (
-                        <div className="flex justify-center gap-2 items-center">
-                          <div className="text-gray-500">{order.items.length} items</div>
-                          <IoIosArrowDown className='text-gray-500' onClick={() => {
+                        <div className="flex justify-center gap-2 items-center relative">
+                          <div className="text_item">{order.items.length} items</div>
+                          <IoIosArrowDown className='text_item cursor-pointer' onClick={() => {
                             setShow(!show)
                             onHandleClick(index)
                           } }/>
@@ -72,30 +74,31 @@ function App() {
                 {
                   show && order.items && selectedOrder === index && (
                     order.items.map((item, index) => (
-                      <div key={index} className="flex justify-between flex-col">
-                        <div className="text-gray-500">{item.itemName} ${item.price}</div>
-                        <span className="text-gray-500">Quantity: {item.quantity}</span>
-                        {
-                          item.variant && (
-                            <div className="text-gray-500">Variant: {item.variant}</div>
-                          )
-                        }
-                        {
-                          item.extras && <div className="text-gray-500 font-bold">Extras</div>
-                        }
-                        {
-                          item.extras && item.extras.map((extra, index) => (
-                            <div key={index} className="text-gray-500">{extra.extraName}: {extra.price}</div>
-                          ))
-                        }
-                      </div>))
+                      <div key={index} className="items_container">
+                        <div className="text-aqua p-4">{item.itemName} ${item.price}</div>
+                          <span className="text-aqua">Quantity: {item.quantity}</span>
+                          {
+                            item.variant && (
+                              <div className="text_item">Variant: {item.variant}</div>
+                            )
+                          }
+                          {
+                            item.extras && <div className="text_item font-bold">Extras</div>
+                          }
+                          {
+                            item.extras && item.extras.map((extra, index) => (
+                              <div key={index} className="text_item">{extra.extraName}: {extra.price}</div>
+                            ))
+                          }
+                      </div>
+                      ))
                   )
                   
                 }
                 </div>
                 {
                   order.status && (
-                    <div className="text-gray-500 text-center w-1/5"> {order.status}</div>
+                    <div className="text_item text-center w-1/5"> {order.status}</div>
                   )
                 }
               </div>
