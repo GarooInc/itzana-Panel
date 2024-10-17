@@ -9,7 +9,6 @@ function App() {
   const [selectedOrder, setSelectedOrder] = useState(null)
   const api = import.meta.env.VITE_API_URL
 
-
   const fetchOrders = async () => {
     try {
       const response = await fetch(`${api}/api/v1/orders`, {
@@ -40,9 +39,34 @@ function App() {
     "Status"
   ]
 
+  const calculateTotalSales = () => {
+    let total = 0;
+    if (orders.orders) {
+      orders.orders.forEach(order => {
+        order.items.forEach(item => {
+          total += item.price * item.quantity;
+        });
+      });
+    }
+    return total;
+  }
+
+  const totalSales = calculateTotalSales();
+  const currentDate = new Date().toLocaleDateString();
+
   return (
     <div className="App h-screen w-screen overflow-y-auto bg-green p-10">
-      <h1 className="text-3xl text-center font-bold py-10 italic text-light-brown">Itzana Orders</h1>
+      <div className='flex justify-between py-10'>
+        <h1 className="text-2xl text-center font-bold italic text-white bg-light-brown shadow-md p-2">
+          Date: {currentDate}
+        </h1>
+        <h1 className="text-4xl text-center font-bold italic text-light-brown">
+          Itzana Orders
+        </h1>
+        <h2 className="text-2xl text-center font-bold italic text-white bg-light-brown shadow-md p-2">
+          Total Sales: ${totalSales}
+        </h2>
+      </div>
       <div className='flex'>
         {
           header.map((item, index) => (
@@ -71,12 +95,13 @@ function App() {
                         </div>
                       )
                 }
+                <div className="items">
                 {
                   show && order.items && selectedOrder === index && (
                     order.items.map((item, index) => (
                       <div key={index} className="items_container">
-                        <div className="text-aqua p-4">{item.itemName} ${item.price}</div>
-                          <span className="text-aqua">Quantity: {item.quantity}</span>
+                        <div className="text-aqua p-4">{item.itemName}</div>
+                          <span className='text-aqua font-bold'>${item.price} QTY: {item.quantity}</span>
                           {
                             item.variant && (
                               <div className="text_item">Variant: {item.variant}</div>
@@ -96,6 +121,7 @@ function App() {
                   
                 }
                 </div>
+                </div>
                 {
                   order.status && (
                     <div className="text_item text-center w-1/5"> {order.status}</div>
@@ -108,7 +134,6 @@ function App() {
         </div>
     </div>
   )
-    
 }
 
 export default App

@@ -26,6 +26,10 @@
 }
 
 .items_container{
-  @apply flex justify-between flex-col absolute -bottom-32 bg-white z-10 rounded-md shadow-xl;
+  @apply flex justify-between flex-col border-b-2 border-lightgray;
+}
+
+.items{
+  @apply absolute -bottom-40 bg-white overflow-y-auto h-40 z-10 rounded-md;
 }
 
