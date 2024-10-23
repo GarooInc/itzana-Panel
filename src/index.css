@@ -36,6 +36,6 @@
 }
 
 .items{
-  @apply absolute -bottom-40 bg-white h-40 z-10 rounded-md font-medium overflow-y-scroll;
+  @apply absolute -bottom-40 bg-white h-40 z-10 rounded-md font-medium overflow-y-auto;
 }
 

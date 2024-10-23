@@ -56,7 +56,7 @@ function App() {
 
   return (
     <div className="App h-screen w-screen overflow-y-auto bg-green p-10">
-      <div className='flex justify-between py-10'>
+      <div className='flex justify-between py-10 md:flex-row flex-col'>
         <h1 className="text-2xl text-center font-bold italic text-white bg-light-brown shadow-md p-2">
           Date: {currentDate}
         </h1>
