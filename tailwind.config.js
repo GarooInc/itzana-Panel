@@ -31,7 +31,6 @@ export default {
         "green": "#28433a",
         "lightgreen": "#bad056",
         "lightgray": "#555347",
-        "lightgreen": "#BAD056",
         "redorange": "#FF3D1E",
         "oxblood": "#AE2602",
         "darkgray": "#333333",
